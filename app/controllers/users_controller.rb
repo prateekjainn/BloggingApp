@@ -1,10 +1,7 @@
 class UsersController < ApplicationController
+  before_action :require_user, only: [:edit,:update]
   def index
-    if current_user
     @users = User.paginate(page: params[:page], per_page: 5)
-    else
-      redirect_to root_url
-    end
   end
   def new
     @user = User.new

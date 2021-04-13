@@ -3,7 +3,7 @@ Rails.application.routes.draw do
   get 'home/index'
   get 'comments/new'
   resources :articles do
-    resources :comments
+    resources :likes, :comments
   end
 #  root 'articles#index'
 resources :sessions, only: [:new, :create, :destroy]

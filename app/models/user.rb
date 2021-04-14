@@ -1,5 +1,6 @@
 class User < ApplicationRecord
     has_many :articles
+    belongs_to :user_role, optional: true
     has_many :likes, dependent: :destroy
     has_secure_password
     validates :username, presence: true, uniqueness: { case_sensitive: false }, length: { minimum: 3, maximum: 25 }

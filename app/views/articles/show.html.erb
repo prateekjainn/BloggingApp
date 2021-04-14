@@ -22,18 +22,19 @@
     <div class="article-actions">
     <p><%= @article.likes.count %> <%= (@article.likes.count) == 1 ? 'Like' : 'Likes'%></p>
     <% pre_like = @article.likes.find { |like| like.user_id == current_user.id} %>
-<% if pre_like %>
-  <%= button_to 'Unlike', article_like_path(@article, pre_like), method: :delete %>
+<% if pre_like  %>
+  <%= button_to 'Liked!', article_like_path(@article, pre_like), method: :delete, class: "btn btn-xs btn-primary"%>
 <% else %>
-  <%= button_to 'Like', article_likes_path(@article), method: :post %>
+  <%= button_to 'Like', article_likes_path(@article), method: :post, class: "btn btn-xs btn-primary"%>
 <% end %>
-        <%= link_to "Edit", edit_article_path(@article), class: "btn btn-xs btn-primary" %>
-        <%= link_to "Delete", article_path(@article), method: :delete, data: { confirm: "Are you sure you want to delete this article?"}, class: "btn btn-xs btn-danger" %>
+        <% if current_user.role_id==2 %><%= link_to "Edit", edit_article_path(@article), class: "btn btn-xs btn-primary" %><% end %>
+        <% if current_user.role_id==2 %><%= link_to "Delete", article_path(@article), method: :delete, data: { confirm: "Are you sure you want to delete this article?"}, class: "btn btn-xs btn-danger" %><% end %>
         <%= link_to "Back", articles_path, class: "btn btn-xs btn-success" %>
     </div>
 </div>
 <section class="section comments">
     <div class="container">
+    <div class="row">
         <h2 class="subtitle is-5"><strong><%= @article.comments.count %></strong> Comments</h2>
         <%= render @article.comments %>
         <div class="comment-form">
@@ -41,5 +42,6 @@
             <h3 class="subtitle is-3">Leave a reply</h3>
             <%= render 'comments/form' %>
         </div>
+    </div>
     </div>
 </section>

@@ -1,5 +1,5 @@
 class UsersController < ApplicationController
-  before_action :require_user, only: [:edit,:update]
+  before_action :require_user, only: %i[edit update]
   def index
     @users = User.paginate(page: params[:page], per_page: 5)
   end
@@ -19,7 +19,7 @@ class UsersController < ApplicationController
       session[:user_id] = @user.id
       redirect_to articles_path
     else
-      render 'new'
+      render "new"
     end
   end
 
@@ -30,10 +30,10 @@ class UsersController < ApplicationController
   def update
     @user = User.find(params[:id])
     if @user.update(user_params)
-      flash[:success] = 'Your account was updated successfully'
+      flash[:success] = "Your account was updated successfully"
       redirect_to articles_path
     else
-      render 'edit'
+      render "edit"
     end
   end
 

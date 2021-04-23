@@ -20,7 +20,9 @@ RSpec.describe User, type: :model do
 
   context "validations" do
     before do
-      @user = User.new(username: "Any", email: "Lorem@iss.psum", password: "test")
+      # @user = User.new(username: "Any", email: "Lorem@iss.psum", password: "test")
+      @user= create(:user)
+      p @user
     end
 
     it "is valid with valid attributes" do
@@ -39,7 +41,7 @@ RSpec.describe User, type: :model do
       expect(@user).to be_present
     end
 
-    it 'has a username atleast 3 character long' do
+    it 'has a username atleast 3 character long and less than 25 characters' do
       expect(@user.username).to have_attributes(size: (be > 2) & (be <= 25)) # passes
     end
   end

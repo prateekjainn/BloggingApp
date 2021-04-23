@@ -1,7 +1,6 @@
 require 'rails_helper'
 
 RSpec.describe UsersController, type: :controller do
-  
   context "GET #index" do
     it "returns a success response" do
       get :index
@@ -12,7 +11,8 @@ RSpec.describe UsersController, type: :controller do
 
   context "GET #show" do
     before(:all) do
-      @user = User.create!(username: 'firstocdnse1s2', email: "p2jcain@sdgfdkcddksshnss.com", password: "fdfdfd", role_id: "1")
+      @user = User.create!(username: 'firstocdnse1s2', email: "p2jcain@sdgfdkcddksshnss.com", password: "fdfdfd",
+                           role_id: "1")
     end
     it 'returns a success response' do
       get :show, params: { id: @user.to_param }
@@ -37,7 +37,10 @@ RSpec.describe UsersController, type: :controller do
   end
 
   context "PATCH #update" do
-
+    it "updates the username and redirects" do
+      patch :update, id: 61, request: { username: "Larry Johnson")
+      p response
+      expect(response).to be_successful
+    end
   end
-
 end

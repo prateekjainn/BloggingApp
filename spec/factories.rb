@@ -1,4 +1,8 @@
 FactoryBot.define do
+  factory :like do
+    
+  end
+
   
     factory :user do
       username {Faker::Name.unique.name }

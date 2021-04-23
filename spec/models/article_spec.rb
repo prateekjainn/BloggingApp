@@ -16,8 +16,8 @@ RSpec.describe Article, type: :model do
     end
   end
   context "validations" do
-    before do
-      # @user = User.new(username: "Any", email: "Lorem@iss.psum", password: "test")
+    before(:all) do
+      # @article = Article.new(title: "Assssssny", description: "Lorem@issLorem@issLorem@iss.psum", user_id: "97")
       @article= create(:article)
       p @article
     end

@@ -4,6 +4,7 @@ FactoryBot.define do
       username {Faker::Name.unique.name }
       email {Faker::Internet.email}
       password {Faker::Internet.password}
+      role_id {1}
     end
 
     factory :article do

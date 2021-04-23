@@ -38,7 +38,10 @@ RSpec.describe User, type: :model do
     end
 
     it 'has a password' do
-      expect(@user).to be_present
+      expect(@user.password).to be_present
+    end
+    it 'has a user role' do
+      expect(@user.role_id).to be_present
     end
 
     it 'has a username atleast 3 character long and less than 25 characters' do

@@ -11,8 +11,7 @@ RSpec.describe UsersController, type: :controller do
 
   context "GET #show" do
     before(:all) do
-      @user = User.create!(username: 'firstocdnse1s2', email: "p2jcain@sdgfdkcddksshnss.com", password: "fdfdfd",
-                           role_id: "1")
+      @user=create(:user)
     end
     it 'returns a success response' do
       get :show, params: { id: @user.to_param }
@@ -29,7 +28,7 @@ RSpec.describe UsersController, type: :controller do
 
   context "POST #create" do
     before(:all) do
-      @user = User.create!(username: 'nedcw', email: "pjdain@dgfdkdkhnss.com", password: "fdfdfd", role_id: "1")
+      @user=create(:user)
     end
     it 'is expected to create a new user' do
       expect(@user).to be_valid
@@ -38,7 +37,7 @@ RSpec.describe UsersController, type: :controller do
 
   context "PATCH #update" do
     it "updates the username and redirects" do
-      patch :update, id: 61, request: { username: "Larry Johnson")
+      # patch :update, id: 61, request: { username: "Larry Johnson")
       p response
       expect(response).to be_successful
     end

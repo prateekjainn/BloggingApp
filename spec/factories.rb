@@ -1,13 +1,5 @@
 FactoryBot.define do
-  factory :comment do
-    
-  end
 
-  factory :like do
-    
-  end
-
-  
     factory :user do
       username {Faker::Name.unique.name }
       email {Faker::Internet.email}
@@ -18,5 +10,10 @@ FactoryBot.define do
       title {Faker::String.random(length: 3..50) }
       description {Faker::String.random(length: 1..300) }
       user_id { '97' }
+    end
+
+    factory :comment do
+      body {Faker::String.random}
+      article_id { '105' }
     end
   end

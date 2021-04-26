@@ -1,6 +1,9 @@
 require 'rails_helper'
 
 RSpec.describe UsersController, type: :controller do
+  before :each do 
+    # allow(controller).to receive(:current_user).and_return(create(:user))
+  end
   context "GET #index" do
     it "returns a success response" do
       get :index
@@ -36,16 +39,18 @@ RSpec.describe UsersController, type: :controller do
   end
 
   context "PATCH #update" do
-    before(:all) do
-      @user=create(:user)
+    before(:each) do
+      # @user=create(:user)
+      @user=User.find(61)
+      p @user
     end
     it "updates the username and redirects" do
-      p @user.to_param
-      put :update, params: { id: @user.id, user: { email: "ss@dsds.com" } }
-
-      # patch :update, params: {id: @user, user: attributes_for(:user, email:"new@email.com")}
+      session[:user_id]=61
       p @user
-      expect(response).to be_redirect
+      patch :update, params: {id: @user.id, user: attributes_for(:user, email: "new@gmail.com")}
+      p @user
+      expect(@user.reload.email).to eq "new@gmail.com"
+
 
       # expect(user.email).to eq("new@email.com")
       # expect(response).to be_successful

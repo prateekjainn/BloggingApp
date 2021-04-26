@@ -10,11 +10,11 @@ FactoryBot.define do
     factory :article do
       title {Faker::String.random(length: 3..50) }
       description {Faker::String.random(length: 1..300) }
-      user_id { '97' }
+      user
     end
 
     factory :comment do
       body {Faker::String.random}
-      article_id { '105' }
+      article
     end
   end

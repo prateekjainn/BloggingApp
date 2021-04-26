@@ -36,10 +36,19 @@ RSpec.describe UsersController, type: :controller do
   end
 
   context "PATCH #update" do
+    before(:all) do
+      @user=create(:user)
+    end
     it "updates the username and redirects" do
-      # patch :update, id: 61, request: { username: "Larry Johnson")
-      p response
-      expect(response).to be_successful
+      p @user.to_param
+      put :update, params: { id: @user.id, user: { email: "ss@dsds.com" } }
+
+      # patch :update, params: {id: @user, user: attributes_for(:user, email:"new@email.com")}
+      p @user
+      expect(response).to be_redirect
+
+      # expect(user.email).to eq("new@email.com")
+      # expect(response).to be_successful
     end
   end
 end

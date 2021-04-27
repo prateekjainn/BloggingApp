@@ -2,7 +2,7 @@ require 'rails_helper'
 
 RSpec.describe ArticlesController, type: :controller do
   before :each do 
-    allow(controller).to receive(:current_user).and_return(create(:user))
+    # allow(controller).to receive(:current_user).and_return(create(:user))
     session[:user_id]=61
   end
   context "GET #index" do
@@ -20,15 +20,18 @@ RSpec.describe ArticlesController, type: :controller do
       expect(@article).to be_valid
     end
   end
-  
   context "PATCH #update" do
     before do
       @user = User.find(session[:user_id])
       @article = FactoryBot.create(:article)
+      @article.user_id=session[:user_id]
     end
     it "updates the username and redirects" do
       patch :update, params: {id: @article.id, article: attributes_for(:article, title: ".com")}
       expect(@article.reload.title).to eq ".com"
     end
+  end
+  context "destroy" do
+    
   end
 end

@@ -31,7 +31,8 @@ class UsersController < ApplicationController
     @user = User.find(params[:id])
     if @user.update(user_params)
       flash[:success] = "Your account was updated successfully"
-      redirect_to articles_path
+      render json: {users: @user}, status: '200'
+      # redirect_to articles_path
     else
       render "edit"
     end

@@ -38,12 +38,10 @@ RSpec.describe UsersController, type: :controller do
 
   context "PUT #update" do
     before(:each) do
-      # @user=create(:user)
       @user=User.find(450)
-      # session[:user_id]=450
+      login_as(@user)
     end
-    it "updates the email and redirects" do
-      
+    it "should update the username" do
       put :update, params: {id: @user.id, user: attributes_for(:user, username: "prateekjainn")}
       p response
       @user.reload

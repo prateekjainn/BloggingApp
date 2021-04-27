@@ -35,6 +35,7 @@ RSpec.describe ArticlesController, type: :controller do
     it "updates the title" do
       @request.env['devise.mapping'] = Devise.mappings[:user]
       # sign_in :user, @user
+
       # put :update, params: {id: @article.id, article: attributes_for(:article, title: "wewcom")}
       put :update, params: {id: @article.id,  article: {title: "wewcom"}}
       p response

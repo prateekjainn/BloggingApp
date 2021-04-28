@@ -31,7 +31,7 @@ RSpec.describe UsersController, type: :controller do
     before(:all) do
       @user=create(:user)
     end
-    it 'is expected to create a new user' do
+    it 'should create a new user' do
       expect(@user).to be_valid
     end
   end

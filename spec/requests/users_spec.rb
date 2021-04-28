@@ -43,10 +43,18 @@ RSpec.describe UsersController, type: :controller do
     end
     it "should update the username" do
       put :update, params: {id: @user.id, user: attributes_for(:user, username: "prateekjainn")}
-      p response
       @user.reload
-      p @user
       expect(@user.username).to eq "prateekjainn"
     end
+    it "should update the email" do
+      put :update, params: {id: @user.id, user: attributes_for(:user, email: "newemail@gmail.com")}
+      @user.reload
+      expect(@user.email).to eq "newemail@gmail.com"
+    end
+    # it "should update the password" do
+    #   put :update, params: {id: @user.id, user: attributes_for(:user, password: "newpassword")}
+    #   @user.reload
+    #   expect(@user.password).to eq "newpassword"
+    # end
   end
 end

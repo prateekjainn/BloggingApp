@@ -1,11 +1,10 @@
 require 'rails_helper'
 
 RSpec.describe ArticlesController, type: :controller do
-
-  # before (:each) do 
-  #   allow(controller).to receive(:current_user).and_return(create(:user))
-  #   session[:user_id]=61
-  # end
+  before(:each) do
+    @user = create(:user)
+    login_as(@user)
+  end
   context "GET #index" do
     it "returns a success response" do
       get :index
@@ -15,35 +14,37 @@ RSpec.describe ArticlesController, type: :controller do
 
   context "POST #create" do
     before(:all) do
-      @article=create(:article)
+      @article = create(:article)
     end
-    it 'is expected to create a new article' do
+    it 'should create a new article' do
       expect(@article).to be_valid
     end
   end
-  
-  context "PATCH #update" do
-    before(:all) do
-      # @user = User.find(session[:user_id])
-      # @article.user_id=session[:user_id]
-      @user = create(:user)
-      @article = FactoryBot.create(:article ,user: @user)
-      # @request.env['devise.mapping'] = Devise.mappings[:user]
-      # sign_in :user, user
 
+  context "PUT #update" do
+    before do
+      @article = create(:article, user: @user)
     end
-    it "updates the title" do
-      @request.env['devise.mapping'] = Devise.mappings[:user]
-      # sign_in :user, @user
-
-      # put :update, params: {id: @article.id, article: attributes_for(:article, title: "wewcom")}
-      put :update, params: {id: @article.id,  article: {title: "wewcom"}}
-      p response
-      p @article
+    it "should update the title" do
+      put :update, params: { id: @article.id, article: { title: "new title" } }
+      expect(response.status).to eq(200)
+    end
+    it "should update the description" do
+      put :update, params: { id: @article.id, article: { title: Faker::String.random } }
       expect(response.status).to eq(200)
     end
   end
   context "destroy" do
-    
+    before do
+      login_as(@user)
+      @article = create(:article, user: @user)
+    end
+    it "should delete the article" do
+      delete :destroy, params: { id: @article.id }
+      p @article
+      p response
+      # expect(response).to have_http_status(:success)
+      expect(response).to redirect_to articles_path
+    end
   end
 end

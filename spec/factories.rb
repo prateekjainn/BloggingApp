@@ -17,4 +17,8 @@ FactoryBot.define do
       body {Faker::String.random}
       article
     end
+    factory :like do
+      article
+      user
+    end
   end

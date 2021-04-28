@@ -11,7 +11,8 @@ class LikesController < ApplicationController
     else
       @article.likes.create(user_id: current_user.id)
     end
-    redirect_to article_path(@article)
+    render json: {article: @article}, status: '200'
+    # redirect_to article_path(@article)
   end
 
   def destroy

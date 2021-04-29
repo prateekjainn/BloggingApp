@@ -9,7 +9,7 @@ RSpec.describe Comment, type: :model do
     context "validations" do
       before(:all) do
         # @comment = Comment.create(body: "Dddddddddddddddddd", article_id: "105")
-        @comment= create(:comment)
+        @comment = create(:comment)
         p @comment
       end
       it 'has a article id' do

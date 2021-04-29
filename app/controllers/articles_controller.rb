@@ -27,7 +27,7 @@ class ArticlesController < ApplicationController
   def update
     if @article.update(article_params)
       flash[:success] = "Article was updated"
-      render json: {articles: @article}, status: '200'
+      render json: { articles: @article }, status: '200'
       # redirect_to article_path(@article)
     else
       flash[:success] = "Article was not updated"

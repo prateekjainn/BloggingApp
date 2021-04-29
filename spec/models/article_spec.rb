@@ -18,7 +18,7 @@ RSpec.describe Article, type: :model do
   context "validations" do
     before(:all) do
       # @article = Article.new(title: "Assssssny", description: "Lorem@issLorem@issLorem@iss.psum", user_id: "97")
-      @article= create(:article)
+      @article = create(:article)
       p @article
     end
     it 'has a article id' do

@@ -22,7 +22,7 @@ RSpec.describe User, type: :model do
   context "validations" do
     before do
       # @user = User.new(username: "Any", email: "Lorem@iss.psum", password: "test")
-      @user= create(:user)
+      @user = create(:user)
       p @user
     end
 
@@ -46,7 +46,7 @@ RSpec.describe User, type: :model do
     end
 
     it 'should have username atleast 3 character long and less than 25 characters' do
-      expect(@user.username).to have_attributes(size: (be > 2) & (be <= 25)) # passes
+      expect(@user.username).to have_attributes(size: (be > 2) & (be <= 25))
     end
   end
 end

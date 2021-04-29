@@ -19,7 +19,8 @@ class UsersController < ApplicationController
       session[:user_id] = @user.id
       redirect_to articles_path
     else
-      render "new"
+      render json: { users: @user }, status: '422'
+      # render "new"
     end
   end
 
@@ -31,7 +32,7 @@ class UsersController < ApplicationController
     @user = User.find(params[:id])
     if @user.update(user_params)
       flash[:success] = "Your account was updated successfully"
-      render json: {users: @user}, status: '200'
+      render json: { users: @user }, status: '200'
       # redirect_to articles_path
     else
       render "edit"
@@ -41,6 +42,6 @@ class UsersController < ApplicationController
   private
 
   def user_params
-    params.require(:user).permit(:username, :email, :password).merge(role_id: 1)
+    params.require(:user).permit(:username, :email, :password).merge(role_id: 1) 
   end
 end

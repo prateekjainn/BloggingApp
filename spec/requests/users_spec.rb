@@ -27,7 +27,7 @@ RSpec.describe UsersController, type: :controller do
   end
 
   context "POST #create" do
-    
+
     it 'should give unauthorized error if user is not given permission to create client' do
       post :create, params: { user: { username: "dsdsdAdd", email: "dsf@gmail.com", password: "SjjjD" } }
     end
@@ -36,7 +36,7 @@ RSpec.describe UsersController, type: :controller do
       login_as(@user)
     end
 
-    it 'should create a new user' do
+    it 'should create a new user if values are correct' do
       expect(@user).to be_valid
     end
 
@@ -68,18 +68,30 @@ RSpec.describe UsersController, type: :controller do
 
   context "PUT #update" do
     before(:each) do
-      @user = User.find(450)
+      @user = User.find(62)
       login_as(@user)
     end
+
     it "should update the username" do
       put :update, params: { id: @user.id, user: attributes_for(:user, username: "prateekjnnn") }
       @user.reload
       expect(@user.username).to eq "prateekjnnn"
     end
+
     it "should update the email" do
       put :update, params: { id: @user.id, user: attributes_for(:user, email: "newmail@gmail.com") }
       @user.reload
       expect(@user.email).to eq "newmail@gmail.com"
+    end
+
+    it 'should give unprocessable entity error if username is not given' do
+      put :update, params: { id: @user.id, user: { username: nil } }
+      expect(response.status).to eq(422)
+    end
+
+    it 'should give unprocessable entity error if email is not given' do
+      put :update, params: { id: @user.id, user: { email: nil } }
+      expect(response.status).to eq(422)
     end
     # it "should update the password" do
     #   put :update, params: {id: @user.id, user: attributes_for(:user, password: "newpassword")}

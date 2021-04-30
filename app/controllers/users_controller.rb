@@ -35,7 +35,8 @@ class UsersController < ApplicationController
       render json: { users: @user }, status: '200'
       # redirect_to articles_path
     else
-      render "edit"
+      render json: { users: @user }, status: '422'
+      # render "edit"
     end
   end
 

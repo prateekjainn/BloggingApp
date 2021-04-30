@@ -4,7 +4,7 @@ RSpec.describe ArticlesController, type: :controller do
   before(:each) do
     @user = create(:user)
     login_as(@user)
-    # @article = create(:article, user: @user)
+    @article = create(:article, user: @user)
   end
   context "GET #index" do
     it "returns a success response" do
@@ -70,13 +70,42 @@ RSpec.describe ArticlesController, type: :controller do
 
   context "PUT #update" do
     it "should update the title" do
-      put :update, params: { id: @article.id, article: { title: nil } }
+      put :update, params: { id: @article.id, article: { title: "nil" } }
       p response
       expect(response.status).to eq(200)
     end
     it "should update the description" do
       put :update, params: { id: @article.id, article: { title: Faker::String.random } }
       expect(response.status).to eq(200)
+    end
+    it 'should give unprocessable entity error if title is not given' do
+      put :update, params: { id: @article.id, article: { title: nil } }
+      expect(response.status).to eq(422)
+    end
+
+    it 'should give unprocessable entity error if description is not given' do
+      put :update, params: { id: @article.id, article: { description: nil } }
+      expect(response.status).to eq(422)
+    end
+
+    it 'should give unprocessable entity error if title is less then 3 character' do
+      put :update, params: { id: @article.id, article: { title: Faker::String.random(length: 2)} }
+      expect(response.status).to eq(422)
+    end
+
+    it 'should give unprocessable entity error if title is more then 50 character' do
+      put :update, params: { id: @article.id, article: { title: Faker::String.random(length: 60)} }
+      expect(response.status).to eq(422)
+    end
+
+    it 'should give unprocessable entity error if description is less then 10 character' do
+      put :update, params: { id: @article.id, article: { description: Faker::String.random(length: 5)} }
+      expect(response.status).to eq(422)
+    end
+
+    it 'should give unprocessable entity error if description is more then 300 character' do
+      put :update, params: { id: @article.id, article: { description: Faker::String.random(length: 305)} }
+      expect(response.status).to eq(422)
     end
   end
   context "destroy" do

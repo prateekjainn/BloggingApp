@@ -32,8 +32,9 @@ class ArticlesController < ApplicationController
       render json: { articles: @article }, status: '200'
       # redirect_to article_path(@article)
     else
-      flash[:success] = "Article was not updated"
-      render "edit"
+      render json: { articles: @article }, status: '422'
+      # flash[:success] = "Article was not updated"
+      # render "edit"
     end
   end
 

@@ -16,9 +16,11 @@ class ArticlesController < ApplicationController
     @article.user = current_user
     if @article.save
       flash[:success] = "Article was successfully created"
-      redirect_to article_path(@article)
+      render json: { articles: @article }, status: '200'
+      # redirect_to article_path(@article)
     else
-      render "new"
+      render json: { articles: @article }, status: '422'
+      # render "new"
     end
   end
 

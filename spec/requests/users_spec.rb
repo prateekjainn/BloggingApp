@@ -28,14 +28,6 @@ RSpec.describe UsersController, type: :controller do
 
   context "POST #create" do
 
-    it 'should give unauthorized error if user is not given permission to create client' do
-      post :create, params: { user: { username: "dsdsdAdd", email: "dsf@gmail.com", password: "SjjjD" } }
-    end
-
-    before do
-      login_as(@user)
-    end
-
     it 'should create a new user if values are correct' do
       expect(@user).to be_valid
     end
@@ -46,22 +38,27 @@ RSpec.describe UsersController, type: :controller do
     end
 
     it 'should give unprocessable entity error if usernamae is not given' do
-      post :create, params: { user: { username: nil, email: "new@gmail.com", password: "SjjjD" } }
+      post :create, params: { user: { username: nil, email: Faker::Internet.email, password: Faker::Internet.password } }
       expect(response.status).to eq(422)
     end
 
     it 'should give unprocessable entity error if password is not given' do
-      post :create, params: { user: { username: "eshdsdas", email: "new@gmail.com", password: nil } }
+      post :create, params: { user: { username: "eshdsdas", email: Faker::Internet.email, password: nil } }
       expect(response.status).to eq(422)
     end
 
     it 'should give unprocessable entity error if email is not correct' do
-      post :create, params: { user: { username: "eshdsdas", email: "newgmail.com", password: "DSDS" } }
+      post :create, params: { user: { username: "eshdsdsdsdas", email: "newsdgmail.com", password: Faker::Internet.password } }
       expect(response.status).to eq(422)
     end
 
-    it 'should give unprocessable entity error if username is less then 4 character' do
-      post :create, params: { user: { username: "ed", email: "new@gmail.com", password: "DSDS" } }
+    it 'should give unprocessable entity error if username is less then 3 character' do
+      post :create, params: { user: { username: Faker::String.random(length: 2), email:  Faker::Internet.email, password: Faker::Internet.password } }
+      expect(response.status).to eq(422)
+    end
+
+    it 'should give unprocessable entity error if username is more then 25 character' do
+      post :create, params: { user: { username: Faker::String.random(length: 25..123), email: Faker::Internet.email, password: Faker::Internet.password } }
       expect(response.status).to eq(422)
     end
   end
